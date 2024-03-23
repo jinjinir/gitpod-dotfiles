@@ -130,5 +130,6 @@ echo "source ~/.git-completion.bash" >> ~/.bashrc
 
 # install helix
 git clone https://github.com/helix-editor/helix
-cd helix
-cargo install --path helix-term --locked
+# cd helix
+# cargo install --path helix-term --locked
+# cp -r $HOME/helix/runtime .
