@@ -115,27 +115,6 @@ unzip JetBrainsMono.zip -d $directory
 sudo apt update && sudo apt install tmux -y
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# install latest neovim via github 
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-# curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage  # download nightly appimage
-chmod u+x nvim.appimage
-
-# move neovim to /opt/bin
-mkdir /opt/bin/
-chown $USER:$USER /opt/bin
-
-# done in case neovim fails
-./nvim.appimage --appimage-extract
-./squashfs-root/AppRun --version
-
-# Optional: exposing nvim globally.
-sudo mv squashfs-root /
-# sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
-sudo ln -s /squashfs-root/AppRun /opt/bin/nvim
-
 # Setup git completions for bash
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 echo "source ~/.git-completion.bash" >> ~/.bashrc
-
-# install helix and prefer helix as editor
-sudo snap install helix --classic
