@@ -120,7 +120,7 @@ fi
 unzip JetBrainsMono.zip -d $directory
 
 # install tmux and plugin manager
-sudo apt update && sudo apt install tmux -y
+sudo apt update && sudo apt install tmux gcc g++ -y
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Setup git completions for bash
