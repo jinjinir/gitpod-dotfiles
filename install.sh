@@ -94,3 +94,48 @@ ations.
                                                               
 # Update paths when after webi installations (fish)           
 # /usr/bin/fish -c "source ~/.config/envman/PATH.env"  
+
+directory = "~/.local/share/fonts"
+
+# download JetBrains fonts, and extract to fonts directory
+curl https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+
+if [ -d "$directory" ]; then
+    echo "Directory exists."
+else
+    echo "Directory does not exist. Running command..."
+    # Replace the command below with the command you want to run
+    mkdir -p "$directory"  # This command creates the directory if it doesn't exist
+    # Example command: mkdir -p "$directory"
+fi
+
+unzip JetBrainsMono.zip -d $directory
+
+# install tmux and plugin manager
+sudo apt update && sudo apt install tmux -y
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# install latest neovim via github 
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+# curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage  # download nightly appimage
+chmod u+x nvim.appimage
+
+# move neovim to /opt/bin
+mkdir /opt/bin/
+chown $USER:$USER /opt/bin
+
+# done in case neovim fails
+./nvim.appimage --appimage-extract
+./squashfs-root/AppRun --version
+
+# Optional: exposing nvim globally.
+sudo mv squashfs-root /
+# sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
+sudo ln -s /squashfs-root/AppRun /opt/bin/nvim
+
+# Setup git completions for bash
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+echo "source ~/.git-completion.bash" >> ~/.bashrc
+
+# install helix and prefer helix as editor
+sudo snap install helix --classic
