@@ -12,11 +12,6 @@ curl https://github.com/jinjinir/gitpod-dotfiles/blob/main/.config/helix/config.
 $(/bin/bash -c 'sudo rm -rf ~/.local/opt ~/.local/*bin* ~/.config/envman/PATH.env')                                         
 $(/bin/bash -c 'sudo rm -rf ~/.pyenv ~/.local/share/pyenv')  # WARN: This is to remove pyenv installation following XDG specs.   
 
-# install helix
-git clone https://github.com/helix-editor/helix
-cd helix
-cargo install --path helix-term --locked
-
 # Install webi                                                
 curl -sS https://webi.sh/webi | sh                            
                                                               
@@ -30,7 +25,7 @@ curl -sS https://webi.sh/awless | sh
 curl -sS https://webi.sh/bat | sh                             
                                                               
 # Install brew via webi                                       
-curl -sS https://webi.sh/brew | sh                            
+# curl -sS https://webi.sh/brew | sh  # brew is installed in gitpod by default                  
                                                               
 # Install caddy via webi                                      
 curl -sS https://webi.sh/caddy | sh                           
@@ -131,3 +126,9 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Setup git completions for bash
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
 echo "source ~/.git-completion.bash" >> ~/.bashrc
+
+
+# install helix
+git clone https://github.com/helix-editor/helix
+cd helix
+cargo install --path helix-term --locked
