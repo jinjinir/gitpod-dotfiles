@@ -1,5 +1,12 @@
 #!/bin/bash                                                   
-                                                              
+
+# manually curl dotfiles
+curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.bashrc -O ~/.bashrc
+curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.config/tmux/tmux.conf -O ~/.tmux.conf
+curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.config/nvim/init.lua -O ~/.config/nvim/init.lua
+curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.config/helix/language.toml -O ~/.config/helix/language.toml
+curl https://github.com/jinjinir/gitpod-dotfiles/blob/main/.config/helix/config.toml -O ~/.config/helix/config.toml
+
 # Purge webi directories before reinstalling webi             
 $(/bin/bash -c 'sudo rm -rf ~/.local/opt ~/.local/*bin* ~/.config/envman/PATH.env')                                         
 $(/bin/bash -c 'sudo rm -rf ~/.pyenv ~/.local/share/pyenv')  # WARN: This is to remove pyenv installation following XDG specs.   
