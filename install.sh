@@ -1,12 +1,23 @@
-#!/bin/bash                                                   
+#!/bin/bash
+# https://www.gitpod.io/docs/configure/user-settings/dotfiles#how-to-install-symlinks-from-dotfiles-when-using-a-custom-installation-script                                                  
 
-# manually curl dotfiles
-curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.bashrc -o ~/.bashrc
-mkdir ~/.config/{tmux,nvim,helix}
-curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.config/tmux/tmux.conf -o ~/.config/tmux/tmux.conf
-curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.config/nvim/init.lua -o ~/.config/nvim/init.lua
-curl https://raw.githubusercontent.com/jinjinir/gitpod-dotfiles/main/.config/helix/language.toml -o ~/.config/helix/language.toml
-curl https://github.com/jinjinir/gitpod-dotfiles/blob/main/.config/helix/config.toml -o ~/.config/helix/config.toml
+current_dir="$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)"
+dotfiles_source="${current_dir}/home_files"
+
+while read -r file; do
+
+    relative_file_path="${file#"${dotfiles_source}"/}"
+    target_file="${HOME}/${relative_file_path}"
+    target_dir="${target_file%/*}"
+
+    if test ! -d "${target_dir}"; then
+        mkdir -p "${target_dir}"
+    fi
+
+    printf 'Installing dotfiles symlink %s\n' "${target_file}"
+    ln -sf "${file}" "${target_file}"
+
+done < <(find "${dotfiles_source}" -type f)
 
 # Purge webi directories before reinstalling webi             
 $(/bin/bash -c 'sudo rm -rf ~/.local/opt ~/.local/*bin* ~/.config/envman/PATH.env')                                         
@@ -95,8 +106,7 @@ curl -sS https://webi.sh/zig | sh
 # not really from webi but also installs by piping into sh    
 curl -sS https://starship.rs/install.sh | sh                  
                                                               
-# Ensure this command is always at the end of all webi install
-ations.                                                       
+# Ensure this command is always at the end of all webi installations.                                                       
 # Update paths when after webi installations (bash)           
 /bin/bash -c "source ~/.config/envman/PATH.env"               
                                                               
